@@ -1,8 +1,7 @@
-
 const { default: mongoose } = require("mongoose");
-const Sales = require("../models/Sales");
 const soldStock = require("./soldStock");
 const Joi = require("joi");
+const Sales = require("../models/sales");
 
 // Utility function for calculating sales amount
 const calculateSalesAmount = (sales, groupByMonth = false) => {
