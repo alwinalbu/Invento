@@ -31,8 +31,8 @@ const addPurchase = (req, res) => {
 const getPurchaseData = async (req, res) => {
   try {
     const findAllPurchaseData = await Purchase.find({ "userID": req.params.userID })
-      .sort({ _id: -1 }) // -1 for descending order
-      .populate("ProductID"); // Populate ProductID field with product details
+      .sort({ _id: -1 }) 
+      .populate("ProductID"); 
 
     res.json(findAllPurchaseData);
   } catch (err) {

@@ -16,11 +16,16 @@ const App = () => {
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    const myLoginUser = JSON.parse(localStorage.getItem("user"));
-    if (myLoginUser) {
-      setUser(myLoginUser.id);
+    try {
+      const myLoginUser = JSON.parse(localStorage.getItem("user"));
+      if (myLoginUser) {
+        setUser(myLoginUser.id);
+      }
+    } catch (error) {
+      console.error("Invalid user data in localStorage:", error);
+    } finally {
+      setLoader(false);
     }
-    setLoader(false);
   }, []);
 
   const signin = (newUser, callback) => {

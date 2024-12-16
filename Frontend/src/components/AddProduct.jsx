@@ -2,6 +2,8 @@ import { Fragment, useContext, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import AuthContext from "../utlis/AuthContext";
+import { serverUrl } from "../pages/Register";
+import Swal from "sweetalert2";
 
 
 export default function AddProduct({
@@ -30,28 +32,39 @@ export default function AddProduct({
       return;
     }
 
-    fetch("http://localhost:4000/product/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to add product");
-        }
-        return response.json();
-      })
-      .then(() => {
-        alert("Product added successfully!");
-        handlePageUpdate();
-        addProductModalSetting();
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Failed to add product. Please try again.");
-      });
+fetch(`${serverUrl}/product/add`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(product),
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed to add product");
+    }
+    return response.json();
+  })
+  .then(() => {
+    // Success notification
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Product added successfully!",
+    });
+    handlePageUpdate(); // Refresh the page or trigger re-fetch
+    addProductModalSetting(); // Close modal after success
+  })
+  .catch((err) => {
+    console.error(err);
+    // Error notification
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Failed to add product. Please try again.",
+    });
+  });
+
   };
 
   return (

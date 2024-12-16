@@ -1,6 +1,4 @@
 const Product = require("../models/Product");
-const Purchase = require("../models/Purchase");
-const Sales = require("../models/Sales");
 
 // Add Product
 const addProduct = async (req, res) => {
@@ -34,11 +32,11 @@ const addProduct = async (req, res) => {
 const getAllProducts = async (req, res) => {
     try {
         const { userId } = req.params;
-        const { includeDeleted } = req.query; // Get the includeDeleted query parameter
+        const { includeDeleted } = req.query; 
 
         const query = { userID: userId };
         if (!includeDeleted) {
-            query.deleted = false; // Only fetch products that are not deleted
+            query.deleted = false; 
         }
 
         const products = await Product.find(query).sort({ _id: -1 });
@@ -57,11 +55,9 @@ const deleteSelectedProduct = async (req, res) => {
 
         console.log(id,"delete id ");
         
-
-        // Soft delete the product by updating the 'deleted' field
         const deleteProduct = await Product.updateOne(
             { _id: id },
-            { $set: { deleted: true } } // Mark product as deleted
+            { $set: { deleted: true } } 
         );
 
         res.status(200).json({
@@ -79,10 +75,10 @@ const restoreProduct = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Update the 'deleted' field to false to restore the product
+       
         const restoreProduct = await Product.updateOne(
             { _id: id },
-            { $set: { deleted: false } } // Mark the product as active
+            { $set: { deleted: false } } 
         );
 
         if (!restoreProduct.nModified) {
@@ -103,7 +99,7 @@ const updateSelectedProduct = async (req, res) => {
     try {
         const { productID, name, manufacturer, description } = req.body;
 
-        // Validate input
+        
         if (!productID || !name || !manufacturer) {
             return res.status(400).json({ message: "Required fields are missing." });
         }
@@ -112,7 +108,7 @@ const updateSelectedProduct = async (req, res) => {
         const updatedProduct = await Product.findByIdAndUpdate(
             { _id: productID },
             { name, manufacturer, description },
-            { new: true } // Return the updated document
+            { new: true } 
         );
 
         if (!updatedProduct) {
@@ -152,7 +148,7 @@ const fetchInStockProducts = async (req, res) => {
     try {
         const { userId } = req.params;
 
-        // Fetch products that are in stock (stock > 0)
+        
         const products = await Product.find({ userID: userId, stock: { $gt: 0 }});
 
         console.log(products,"after fetching ");

@@ -3,6 +3,7 @@ import AddProduct from "../components/AddProduct";
 import UpdateProduct from "../components/UpdateProduct";
 import searchIcon from "../assets/search-icon.png";
 import AuthContext from "../utlis/AuthContext";
+import { serverUrl } from "./Register";
 
 const Inventory = () => {
   const [showProductModal, setShowProductModal] = useState(false);
@@ -26,7 +27,7 @@ const Inventory = () => {
 
 
   const fetchSearchData = () => {
-    fetch(`http://localhost:4000/product/search?searchTerm=${searchTerm}`)
+    fetch(`${serverUrl}/product/search?searchTerm=${searchTerm}`)
       .then((response) => response.json())
       .then((data) => {
         setAllProducts(data);
@@ -40,9 +41,7 @@ const Inventory = () => {
 
   // Fetching Data of All Products (including deleted ones)
   const fetchProductsData = () => {
-    fetch(
-      `http://localhost:4000/product/get/${authContext.user}?includeDeleted=true`
-    )
+    fetch(`${serverUrl}/product/get/${authContext.user}?includeDeleted=true`)
       .then((response) => response.json())
       .then((data) => {
         setAllProducts(data);
@@ -69,7 +68,7 @@ const Inventory = () => {
 
   // Delete item (soft delete, mark as inactive)
   const deleteItem = (id) => {
-    fetch(`http://localhost:4000/product/delete/${id}`, {
+    fetch(`${serverUrl}/product/delete/${id}`, {
       method: "PUT", // Change method to PUT for updating the product
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +88,7 @@ const Inventory = () => {
 
   // Function to restore a deleted product (make it active again)
   const restoreProduct = (id) => {
-    fetch(`http://localhost:4000/product/restore/${id}`, {
+    fetch(`${serverUrl}/product/restore/${id}`, {
       method: "PUT", // Use PUT to update the product
       headers: {
         "Content-Type": "application/json",

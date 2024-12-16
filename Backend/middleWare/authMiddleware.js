@@ -11,10 +11,8 @@ const protect = asyncHandler(async (req, res, next) => {
             throw new Error("Not Authorized");
         }
 
-        // Verify Token
         const verified = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Get User id from token
         const user = await User.findById(verified.id).select("-password");
 
         if (!user) {
@@ -23,7 +21,7 @@ const protect = asyncHandler(async (req, res, next) => {
         }
 
         req.user = user;
-        next(); // Passes control to the next middleware or route handler
+        next(); 
     } catch (error) {
         res.status(401);
         throw new Error("Not authorized, please login");

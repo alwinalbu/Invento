@@ -1,6 +1,8 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { serverUrl } from "../pages/Register";
+import Swal from "sweetalert2";
 
 export default function AddPurchase({
   addSaleModalSetting,
@@ -60,22 +62,39 @@ const handleInputChange = (key, value) => {
       return;
     }
 
-    fetch("http://localhost:4000/purchase/add", {
+    fetch(`${serverUrl}/purchase/add`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(purchase),
     })
-      .then((result) => {
-        alert("Purchase Added Successfully");
-        handlePageUpdate();
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add purchase.");
+        }
+        return response.json();
+      })
+      .then(() => {
+        // Success notification
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Purchase Added Successfully!",
+        });
+        handlePageUpdate(); // Refresh the page or trigger re-fetch
         addSaleModalSetting(); // Close modal after success
       })
       .catch((err) => {
-        console.log(err);
-        alert("Failed to add purchase. Please try again.");
+        console.error(err);
+        // Error notification
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to add purchase. Please try again.",
+        });
       });
+
   };
 
 

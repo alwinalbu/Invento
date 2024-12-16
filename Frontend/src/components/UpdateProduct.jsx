@@ -1,6 +1,8 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { serverUrl } from "../pages/Register";
+import Swal from "sweetalert2";
 
 export default function UpdateProduct({
   updateProductData,
@@ -29,20 +31,38 @@ export default function UpdateProduct({
   };
 
 
-  const updateProduct = () => {
-    fetch("http://localhost:4000/product/update", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(product),
+const updateProduct = () => {
+  fetch(`${serverUrl}/product/update`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(product),
+  })
+    .then((result) => {
+      if (result.ok) {
+        // Success notification with SweetAlert2
+        Swal.fire({
+          icon: "success",
+          title: "Product Updated",
+          text: "Product updated successfully.",
+        });
+        setOpen(false); // Close the modal after successful update
+      } else {
+        throw new Error("Failed to update product.");
+      }
     })
-      .then((result) => {
-        alert("Product Updated");
-        setOpen(false);
-      })
-      .catch((err) => console.log(err));
-  };
+    .catch((err) => {
+      console.error("Error updating product:", err);
+      // Error notification with SweetAlert2
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update product. Please try again.",
+      });
+    });
+};
+
 
   return (
     // Modal

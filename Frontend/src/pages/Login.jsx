@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../utlis/AuthContext";
 import logo from "../assets/logo.png";
 import signupImg from '../assets/signup.jpg'
+import { serverUrl } from "./Register";
 
 function Login() {
   const [form, setForm] = useState({
@@ -25,7 +26,7 @@ function Login() {
       return;
     }
 
-    fetch("http://localhost:4000/login", {
+    fetch(`${serverUrl}/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -40,8 +41,8 @@ function Login() {
       })
       .then((data) => {
         alert("Successfully logged in.");
-        console.log(data,"after login in front end");
-        
+        console.log(data, "after login in front end");
+
         localStorage.setItem("user", JSON.stringify(data.user)); // Store user data in localStorage
         authContext.signin(data.user.id, () => {
           // Call signin from AuthContext

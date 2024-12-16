@@ -3,6 +3,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import AuthContext from "../utlis/AuthContext";
 import UploadImage from "./UploadImage";
+import { serverUrl } from "../pages/Register";
+import Swal from "sweetalert2";
 
 export default function AddStore({ onStoreAdded }) {
   const authContext = useContext(AuthContext);
@@ -31,27 +33,40 @@ export default function AddStore({ onStoreAdded }) {
     return true;
   };
 
-  const addStore = () => {
-    if (!validateForm()) return;
+const addStore = () => {
+  if (!validateForm()) return;
 
-    fetch("http://localhost:4000/store/add", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(form),
+  fetch(`${serverUrl}/store/add`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(form),
+  })
+    .then((result) => {
+      if (result.ok) {
+        // Success notification with SweetAlert2
+        Swal.fire({
+          icon: "success",
+          title: "Store Added",
+          text: "Store added successfully.",
+        });
+        onStoreAdded(); // Callback to update the page or state
+        setOpen(false); // Close the modal
+      } else {
+        throw new Error("Failed to add store.");
+      }
     })
-      .then((result) => {
-        if (result.ok) {
-          alert("Store added successfully.");
-          onStoreAdded();
-          setOpen(false);
-        } else {
-          throw new Error("Failed to add store.");
-        }
-      })
-      .catch((err) => console.error("Error adding store:", err));
-  };
+    .catch((err) => {
+      console.error("Error adding store:", err);
+      // Error notification with SweetAlert2
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to add store. Please try again.",
+      });
+    });
+};
 
   const uploadImage = async (image) => {
     const data = new FormData();

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../utlis/AuthContext";
 import AddStore from "../components/AddStore";
 import locationIcon from "../assets/location-icon.png";
+import { serverUrl } from "./Register";
 
 function Store() {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,7 @@ function Store() {
 
   // Fetch all stores for the current user
   const fetchStores = () => {
-    fetch(`http://localhost:4000/store/get/${authContext.user}`)
+    fetch(`${serverUrl}/store/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setStores(data);

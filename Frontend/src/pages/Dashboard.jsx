@@ -3,6 +3,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { PieChart } from "@mui/x-charts/PieChart"; 
 
 import AuthContext from "../utlis/AuthContext";
+import { serverUrl } from "./Register";
 
 function Dashboard() {
   const [saleAmount, setSaleAmount] = useState("");
@@ -17,7 +18,7 @@ function Dashboard() {
 
   // Fetching total sales amount
   const fetchTotalSaleAmount = () => {
-    fetch(`http://localhost:4000/sales/get/${authContext.user}/totalsaleamount`)
+    fetch(`${serverUrl}/sales/get/${authContext.user}/totalsaleamount`)
       .then((response) => response.json())
       .then((datas) => setSaleAmount(datas.totalSaleAmount));
   };
@@ -25,7 +26,7 @@ function Dashboard() {
   // Fetching total purchase amount
   const fetchTotalPurchaseAmount = () => {
     fetch(
-      `http://localhost:4000/purchase/get/${authContext.user}/totalpurchaseamount`
+      `${serverUrl}/purchase/get/${authContext.user}/totalpurchaseamount`
     )
       .then((response) => response.json())
       .then((datas) => setPurchaseAmount(datas.totalPurchaseAmount));
@@ -33,14 +34,14 @@ function Dashboard() {
 
   // Fetching all stores data
   const fetchStoresData = () => {
-    fetch(`http://localhost:4000/store/get/${authContext.user}`)
+    fetch(`${serverUrl}/store/get/${authContext.user}`)
       .then((response) => response.json())
       .then((datas) => setStores(datas));
   };
 
   // Fetching Data of All Products
   const fetchProductsData = () => {
-    fetch(`http://localhost:4000/product/get/${authContext.user}`)
+    fetch(`${serverUrl}/product/get/${authContext.user}`)
       .then((response) => response.json())
       .then((datas) => setProducts(datas))
       .catch((err) => console.log(err));
@@ -48,7 +49,7 @@ function Dashboard() {
 
   // Fetching Monthly Sales Data from backend
   const fetchMonthlySalesData = () => {
-    fetch(`http://localhost:4000/sales/getmonthly/${authContext.user}`)
+    fetch(`${serverUrl}/sales/getmonthly/${authContext.user}`)
       .then((response) => response.json())
       .then((datas) => {
         const salesAmount = datas.salesAmount;
@@ -75,7 +76,7 @@ function Dashboard() {
 
   // Fetching Sales Data for Products (for the Pie Chart)
   const fetchItemsSoldData = () => {
-    fetch(`http://localhost:4000/sales/getitems/${authContext.user}`)
+    fetch(`${serverUrl}/sales/getitems/${authContext.user}`)
       .then((response) => response.json())
       .then((datas) => {
         // Assuming the response is a list of products with quantity sold

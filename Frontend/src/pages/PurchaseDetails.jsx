@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../utlis/AuthContext";
 import AddPurchase from "../components/AddPurchase";
+import { serverUrl } from "./Register";
 
 
 function PurchaseDetails() {
@@ -21,7 +22,7 @@ function PurchaseDetails() {
 
   // Fetching Data of All Purchase items
   const fetchPurchaseData = () => {
-    fetch(`http://localhost:4000/purchase/get/${authContext.user}`)
+    fetch(`${serverUrl}/purchase/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllPurchaseData(data);
@@ -31,7 +32,7 @@ function PurchaseDetails() {
 
   // Fetching Data of All Products
   const fetchProductsData = () => {
-    fetch(`http://localhost:4000/product/get/${authContext.user}`)
+    fetch(`${serverUrl}/product/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllProducts(data);

@@ -1,6 +1,9 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { serverUrl } from "../pages/Register";
+import Swal from "sweetalert2";
+
 
 export default function AddSale({
   addSaleModalSetting,
@@ -63,7 +66,7 @@ export default function AddSale({
    }
  };
 
-  // POST Data
+
   const addSale = () => {
     // Validation before submitting the sale
     if (sale.stockSold <= 0 || sale.stockSold > productStock) {
@@ -71,7 +74,7 @@ export default function AddSale({
       return;
     }
 
-    fetch("http://localhost:4000/sales/add", {
+    fetch(`${serverUrl}/sales/add`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -79,12 +82,32 @@ export default function AddSale({
       body: JSON.stringify(sale),
     })
       .then((result) => {
-        alert("Sale ADDED");
-        handlePageUpdate();
-        addSaleModalSetting();
+        if (result.ok) {
+          Swal.fire({
+            title: "Success!",
+            text: "New Sale is Added.",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            handlePageUpdate(); 
+            addSaleModalSetting();
+          });
+        } else {
+          return result.json().then((data) => {
+            throw new Error(data.message || "Something went wrong");
+          });
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Swal.fire({
+          title: "Error!",
+          text: err.message || "Failed to add sale.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
+
 
   return (
     <Transition.Root show={open} as={Fragment}>

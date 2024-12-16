@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../utlis/AuthContext";
 import AddSale from "../components/AddSale";
+import { serverUrl } from "./Register";
 
 
 
@@ -23,7 +24,7 @@ function Sales() {
 
   // Fetching Data of All Sales
   const fetchSalesData = () => {
-    fetch(`http://localhost:4000/sales/get/${authContext.user}`)
+    fetch(`${serverUrl}/sales/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllSalesData(data);
@@ -33,7 +34,7 @@ function Sales() {
 
   // Fetching Data of In-stock Products
   const fetchInStockProductsData = () => {
-    fetch(`http://localhost:4000/product/in-stock/${authContext.user}`) // Assuming you will create this route
+    fetch(`${serverUrl}/product/in-stock/${authContext.user}`) // Assuming you will create this route
       .then((response) => response.json())
       .then((data) => {
         setAllProducts(data); // Set the products that are in stock
@@ -45,7 +46,7 @@ function Sales() {
 
   // Fetching Data of All Stores
   const fetchStoresData = () => {
-    fetch(`http://localhost:4000/store/get/${authContext.user}`)
+    fetch(`${serverUrl}/store/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllStores(data);

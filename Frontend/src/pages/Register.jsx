@@ -4,6 +4,9 @@ import logo from "../assets/logo.png";
 import loginImage from "../assets/Login.png";
 import UploadImage from "../components/UploadImage"
 
+export const serverUrl = import.meta.env.VITE_SERVER_URL;
+console.log(serverUrl,'url here');
+
 const Register = () => {
   const [form, setForm] = useState({
     firstName: "",
@@ -14,7 +17,7 @@ const Register = () => {
     imageUrl: "",
     imageFile: null,
   });
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   // Handle input change for registration form
@@ -45,7 +48,7 @@ const Register = () => {
 
       console.log("Uploaded image response:", dataRes);
 
-      return dataRes.url; // Return the image URL after upload
+      return dataRes.url; 
     } catch (error) {
       console.error("Error uploading image:", error);
       return null;
@@ -55,14 +58,14 @@ const Register = () => {
 
   // Register User
   const registerUser = (updatedForm) => {
-    setLoading(true); // Set loading to true on form submit
+    setLoading(true);
 
-    fetch("http://localhost:4000/register", {
+    fetch(`${serverUrl}/register`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(updatedForm), // Send the updated form data with imageUrl
+      body: JSON.stringify(updatedForm), 
     })
       .then((result) => {
         alert("Successfully Registered, Now Login with your details");
@@ -73,7 +76,7 @@ const Register = () => {
         alert("Error during registration");
       })
       .finally(() => {
-        setLoading(false); // Set loading to false after the operation
+        setLoading(false); 
       });
   };
 
@@ -165,7 +168,7 @@ const handleSubmit = async (e) => {
                 onChange={handleInputChange}
               />
             </div>
-            <UploadImage uploadImage={handleImageUpload} /> {/* Image upload */}
+            <UploadImage uploadImage={handleImageUpload} /> 
           </div>
 
           <div className="flex items-center justify-between">
@@ -197,9 +200,9 @@ const handleSubmit = async (e) => {
             <button
               type="submit"
               className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              disabled={loading} // Disable button during loading
+              disabled={loading} 
             >
-              {loading ? "Signing up..." : "Sign up"} {/* Loading text */}
+              {loading ? "Signing up..." : "Sign up"} 
             </button>
             <p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
