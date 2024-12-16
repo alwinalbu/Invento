@@ -1,4 +1,4 @@
-const Purchase = require("../models/Purchase");
+const Purchase = require("../models/purchase");
 const purchaseStock = require("./purchaseStock");
 
 // Add Purchase Details
