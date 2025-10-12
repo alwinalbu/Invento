@@ -127,5 +127,40 @@ const getMonthlySales = async (req, res) => {
   }
 };
 
-module.exports = { addSales, getSalesData, getTotalSalesAmount, getMonthlySales ,getItemsSold };
+// ✅ Check if a product has any sales after purchase date
+const checkProductSales = async (req, res) => {
+  try {
+    const { productID, purchaseDate } = req.params;
+
+    console.log("🔍 Product ID:", productID);
+    console.log("🗓️ Purchase Date:", purchaseDate);
+
+    // Convert properly
+    const purchaseDateObj = new Date(purchaseDate);
+
+    // Ensure valid date
+    if (isNaN(purchaseDateObj)) {
+      return res.status(400).json({ message: "Invalid purchase date" });
+    }
+
+    // Query safely
+    const sales = await Sales.find({
+      ProductID: productID,
+      $expr: {
+        $gte: [
+          { $dateFromString: { dateString: "$SaleDate" } },
+          purchaseDateObj
+        ]
+      }
+    });
+
+    console.log(`🧾 Sales found: ${sales.length}`);
+    res.json({ hasSales: sales.length > 0 });
+  } catch (error) {
+    console.error("❌ Error checking product sales:", error);
+    res.status(500).json({ message: "Server error while checking sales" });
+  }
+};
+
+module.exports = { addSales, getSalesData, getTotalSalesAmount, getMonthlySales ,getItemsSold,checkProductSales };
 

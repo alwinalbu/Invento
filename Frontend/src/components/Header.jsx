@@ -1,198 +1,634 @@
-import React, {Fragment, useContext } from 'react'
+// // import React, {Fragment, useContext } from 'react'
+// // import { Disclosure, Menu, Transition } from "@headlessui/react";
+// // import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+// // import AuthContext from '../utlis/AuthContext'
+// // import logo from "../assets/logo.png";
+// // import { Link } from "react-router-dom";
+
+
+
+
+// // const navigation = [
+// //   { name: "Dashboard", href: "/", current: true },
+// //   { name: "Inventory", href: "/inventory", current: false },
+// //   { name: "Purchase Details", href: "/purchase-details", current: false },
+// //   { name: "Sales", href: "/sales", current: false },
+// //   { name: "Manage Store", href: "/manage-store", current: false },
+// //   { name: "Suppliers", href: "/suppliers", current: false },
+// // ];
+
+// // const userNavigation = [{ name: "Sign out", href: "./login" }];
+
+// // function classNames(...classes) {
+// //   return classes.filter(Boolean).join(" ");
+// // }
+
+
+// // const Header = () => {
+// //   const authContext = useContext(AuthContext);
+// //   const localStorageData = JSON.parse(localStorage.getItem('user'));
+
+// //   return (
+// //     <>
+// //       <div className="min-h-full">
+// //         <Disclosure as="nav" className="bg-gray-800">
+// //           {({ open }) => (
+// //             <>
+// //               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+// //                 <div className="flex h-16 items-center justify-between">
+// //                   <div className="flex items-center">
+// //                     <div className="flex-shrink-0">
+// //                       <div className="flex justify-center items-center gap-2">
+// //                         <img
+// //                           className="h-8 w-8"
+// //                           src={logo}
+// //                           alt="Inventory Management System"
+// //                         />
+// //                         <span className="font-bold text-white italic">
+// //                           Inventory Management
+// //                         </span>
+// //                       </div>
+// //                     </div>
+// //                   </div>
+// //                   <div className="hidden md:block">
+// //                     <div className="ml-4 flex items-center md:ml-6">
+// //                       <button
+// //                         type="button"
+// //                         className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+// //                       >
+// //                         <span className="sr-only">View notifications</span>
+// //                         <BellIcon className="h-6 w-6" aria-hidden="true" />
+// //                       </button>
+
+// //                       {/* Profile dropdown */}
+// //                       <Menu as="div" className="relative ml-3">
+// //                         <div>
+// //                           <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+// //                             <span className="sr-only">Open user menu</span>
+// //                             <img
+// //                               className="h-8 w-8 rounded-full"
+// //                               src={localStorageData.imageUrl}
+// //                               alt="profile"
+// //                             />
+// //                           </Menu.Button>
+// //                         </div>
+// //                         <Transition
+// //                           as={Fragment}
+// //                           enter="transition ease-out duration-100"
+// //                           enterFrom="transform opacity-0 scale-95"
+// //                           enterTo="transform opacity-100 scale-100"
+// //                           leave="transition ease-in duration-75"
+// //                           leaveFrom="transform opacity-100 scale-100"
+// //                           leaveTo="transform opacity-0 scale-95"
+// //                         >
+// //                           <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+// //                             {userNavigation.map((item) => (
+// //                               <Menu.Item key={item.name}>
+// //                                 {({ active }) => (
+// //                                   <Link
+// //                                     to={item.href}
+// //                                     className={classNames(
+// //                                       active ? "bg-gray-100" : "",
+// //                                       "block px-4 py-2 text-sm text-gray-700"
+// //                                     )}
+// //                                   >
+// //                                     <span onClick={() => authContext.signout()}>
+// //                                       {item.name}{" "}
+// //                                     </span>
+// //                                   </Link>
+// //                                 )}
+// //                               </Menu.Item>
+// //                             ))}
+// //                           </Menu.Items>
+// //                         </Transition>
+// //                       </Menu>
+// //                     </div>
+// //                   </div>
+// //                   <div className="-mr-2 flex md:hidden">
+// //                     {/* Mobile menu button */}
+// //                     <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+// //                       <span className="sr-only">Open main menu</span>
+// //                       {open ? (
+// //                         <XMarkIcon
+// //                           className="block h-6 w-6"
+// //                           aria-hidden="true"
+// //                         />
+// //                       ) : (
+// //                         <Bars3Icon
+// //                           className="block h-6 w-6"
+// //                           aria-hidden="true"
+// //                         />
+// //                       )}
+// //                     </Disclosure.Button>
+// //                   </div>
+// //                 </div>
+// //               </div>
+
+// //               <Disclosure.Panel className="md:hidden">
+// //                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+// //                   {navigation.map((item) => (
+// //                     <Link to={item.href} key={item.name}>
+// //                       <Disclosure.Button
+// //                         key={item.name}
+// //                         as="a"
+// //                         // href={item.href}
+// //                         className={classNames(
+// //                           item.current
+// //                             ? "bg-gray-900 text-white"
+// //                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
+// //                           "block rounded-md px-3 py-2 text-base font-medium"
+// //                         )}
+// //                         aria-current={item.current ? "page" : undefined}
+// //                       >
+// //                         {item.name}
+// //                       </Disclosure.Button>
+// //                     </Link>
+// //                   ))}
+// //                 </div>
+// //                 <div className="border-t border-gray-700 pt-4 pb-3">
+// //                   <div className="flex items-center px-5">
+// //                     <div className="flex-shrink-0">
+// //                       <img
+// //                         className="h-10 w-10 rounded-full"
+// //                         src={localStorageData.imageUrl}
+// //                         alt="profile"
+// //                       />
+// //                     </div>
+// //                     <div className="ml-3">
+// //                       <div className="text-base font-medium leading-none text-white">
+// //                         {localStorageData.firstName +
+// //                           " " +
+// //                           localStorageData.lastName}
+// //                       </div>
+// //                       <div className="text-sm font-medium leading-none text-gray-400">
+// //                         {localStorageData.email}
+// //                       </div>
+// //                     </div>
+// //                     <button
+// //                       type="button"
+// //                       className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+// //                     >
+// //                       <span className="sr-only">View notifications</span>
+// //                       <BellIcon className="h-6 w-6" aria-hidden="true" />
+// //                     </button>
+// //                   </div>
+// //                   <div className="mt-3 space-y-1 px-2">
+// //                     {userNavigation.map((item) => (
+// //                       <Disclosure.Button
+// //                         key={item.name}
+// //                         as="a"
+// //                         href={item.href}
+// //                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+// //                       >
+// //                         <span onClick={() => authContext.signout()}>
+// //                           {item.name}{" "}
+// //                         </span>
+// //                       </Disclosure.Button>
+// //                     ))}
+// //                   </div>
+// //                 </div>
+// //               </Disclosure.Panel>
+// //             </>
+// //           )}
+// //         </Disclosure>
+// //       </div>
+// //     </>
+// //   )
+// // }
+
+// // export default Header 
+
+// import React, { Fragment, useContext } from "react";
+// import { Disclosure, Menu, Transition } from "@headlessui/react";
+// import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+// import AuthContext from "../utlis/AuthContext";
+// import logo from "../assets/logo.png";
+// import { Link, useLocation } from "react-router-dom";
+
+// const navigation = [
+//   { name: "Dashboard", href: "/" },
+//   { name: "Inventory", href: "/inventory" },
+//   { name: "Purchase Details", href: "/purchase-details" },
+//   { name: "Sales", href: "/sales" },
+//   { name: "Manage Store", href: "/manage-store" },
+//   { name: "Suppliers", href: "/suppliers" }, // ✅ Added Suppliers Page
+// ];
+
+// const userNavigation = [{ name: "Sign out", href: "./login" }];
+
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
+
+// const Header = () => {
+//   const authContext = useContext(AuthContext);
+//   const localStorageData = JSON.parse(localStorage.getItem("user"));
+//   const location = useLocation(); // ✅ Track current route
+
+//   return (
+//     <div className="min-h-full">
+//       <Disclosure as="nav" className="bg-gray-800">
+//         {({ open }) => (
+//           <>
+//             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+//               <div className="flex h-16 items-center justify-between">
+//                 {/* ✅ Logo */}
+//                 <div className="flex items-center">
+//                   <div className="flex-shrink-0">
+//                     <div className="flex justify-center items-center gap-2">
+//                       <img
+//                         className="h-8 w-8"
+//                         src={logo}
+//                         alt="Inventory Management System"
+//                       />
+//                       <span className="font-bold text-white italic">
+//                         Inventory Management
+//                       </span>
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 {/* ✅ Desktop Menu */}
+//                 <div className="hidden md:block">
+//                   <div className="ml-10 flex items-baseline space-x-4">
+//                     {navigation.map((item) => {
+//                       const isActive = location.pathname === item.href;
+//                       return (
+//                         <Link
+//                           key={item.name}
+//                           to={item.href}
+//                           className={classNames(
+//                             isActive
+//                               ? "bg-gray-900 text-white"
+//                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
+//                             "rounded-md px-3 py-2 text-sm font-medium transition"
+//                           )}
+//                         >
+//                           {item.name}
+//                         </Link>
+//                       );
+//                     })}
+//                   </div>
+//                 </div>
+
+//                 {/* ✅ Right Section - Notifications + Profile */}
+//                 <div className="hidden md:block">
+//                   <div className="ml-4 flex items-center md:ml-6">
+//                     {/* Notification */}
+//                     <button
+//                       type="button"
+//                       className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+//                     >
+//                       <span className="sr-only">View notifications</span>
+//                       <BellIcon className="h-6 w-6" aria-hidden="true" />
+//                     </button>
+
+//                     {/* Profile dropdown */}
+//                     <Menu as="div" className="relative ml-3">
+//                       <div>
+//                         <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+//                           <span className="sr-only">Open user menu</span>
+//                           <img
+//                             className="h-8 w-8 rounded-full"
+//                             src={localStorageData.imageUrl}
+//                             alt="profile"
+//                           />
+//                         </Menu.Button>
+//                       </div>
+//                       <Transition
+//                         as={Fragment}
+//                         enter="transition ease-out duration-100"
+//                         enterFrom="transform opacity-0 scale-95"
+//                         enterTo="transform opacity-100 scale-100"
+//                         leave="transition ease-in duration-75"
+//                         leaveFrom="transform opacity-100 scale-100"
+//                         leaveTo="transform opacity-0 scale-95"
+//                       >
+//                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+//                           {userNavigation.map((item) => (
+//                             <Menu.Item key={item.name}>
+//                               {({ active }) => (
+//                                 <Link
+//                                   to={item.href}
+//                                   className={classNames(
+//                                     active ? "bg-gray-100" : "",
+//                                     "block px-4 py-2 text-sm text-gray-700"
+//                                   )}
+//                                 >
+//                                   <span onClick={() => authContext.signout()}>
+//                                     {item.name}
+//                                   </span>
+//                                 </Link>
+//                               )}
+//                             </Menu.Item>
+//                           ))}
+//                         </Menu.Items>
+//                       </Transition>
+//                     </Menu>
+//                   </div>
+//                 </div>
+
+//                 {/* ✅ Mobile menu button */}
+//                 <div className="-mr-2 flex md:hidden">
+//                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+//                     <span className="sr-only">Open main menu</span>
+//                     {open ? (
+//                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+//                     ) : (
+//                       <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+//                     )}
+//                   </Disclosure.Button>
+//                 </div>
+//               </div>
+//             </div>
+
+//             {/* ✅ Mobile Menu */}
+//             <Disclosure.Panel className="md:hidden">
+//               <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+//                 {navigation.map((item) => {
+//                   const isActive = location.pathname === item.href;
+//                   return (
+//                     <Link key={item.name} to={item.href}>
+//                       <Disclosure.Button
+//                         as="div"
+//                         className={classNames(
+//                           isActive
+//                             ? "bg-gray-900 text-white"
+//                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
+//                           "block rounded-md px-3 py-2 text-base font-medium"
+//                         )}
+//                       >
+//                         {item.name}
+//                       </Disclosure.Button>
+//                     </Link>
+//                   );
+//                 })}
+//               </div>
+
+//               {/* ✅ Mobile User Section */}
+//               <div className="border-t border-gray-700 pt-4 pb-3">
+//                 <div className="flex items-center px-5">
+//                   <div className="flex-shrink-0">
+//                     <img
+//                       className="h-10 w-10 rounded-full"
+//                       src={localStorageData.imageUrl}
+//                       alt="profile"
+//                     />
+//                   </div>
+//                   <div className="ml-3">
+//                     <div className="text-base font-medium leading-none text-white">
+//                       {localStorageData.firstName +
+//                         " " +
+//                         localStorageData.lastName}
+//                     </div>
+//                     <div className="text-sm font-medium leading-none text-gray-400">
+//                       {localStorageData.email}
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 {/* Mobile Logout */}
+//                 <div className="mt-3 space-y-1 px-2">
+//                   {userNavigation.map((item) => (
+//                     <Disclosure.Button
+//                       key={item.name}
+//                       as="a"
+//                       href={item.href}
+//                       className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+//                     >
+//                       <span onClick={() => authContext.signout()}>
+//                         {item.name}
+//                       </span>
+//                     </Disclosure.Button>
+//                   ))}
+//                 </div>
+//               </div>
+//             </Disclosure.Panel>
+//           </>
+//         )}
+//       </Disclosure>
+//     </div>
+//   );
+// };
+
+// export default Header;
+
+import React, { Fragment, useContext } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import AuthContext from '../utlis/AuthContext'
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import AuthContext from "../utlis/AuthContext";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-
-
-
+// Navigation menu links
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Inventory", href: "/inventory", current: false },
-  { name: "Purchase Details", href: "/purchase-details", current: false },
-  { name: "Sales", href: "/sales", current: false },
-  { name: "Manage Store", href: "/manage-store", current: false },
+  { name: "Dashboard", href: "/" },
+  { name: "Inventory", href: "/inventory" },
+  { name: "Purchase Details", href: "/purchase-details" },
+  { name: "Sales", href: "/sales" },
+  { name: "Manage Store", href: "/manage-store" },
+  { name: "Suppliers", href: "/suppliers" },
 ];
 
-const userNavigation = [{ name: "Sign out", href: "./login" }];
-
+// Utility to combine Tailwind classes conditionally
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
 const Header = () => {
-  const authContext = useContext(AuthContext);
-  const localStorageData = JSON.parse(localStorage.getItem('user'));
+  const { signout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Safely parse user data
+  const localStorageData = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || {};
+    } catch {
+      return {};
+    }
+  })();
+
+  // Handle logout with confirmation
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Logout?",
+      text: "Are you sure you want to log out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signout(() => navigate("/login", { replace: true }));
+      }
+    });
+  };
 
   return (
-    <>
-      <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
-          {({ open }) => (
-            <>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <div className="flex justify-center items-center gap-2">
-                        <img
-                          className="h-8 w-8"
-                          src={logo}
-                          alt="Inventory Management System"
-                        />
-                        <span className="font-bold text-white italic">
-                          Inventory Management
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="hidden md:block">
-                    <div className="ml-4 flex items-center md:ml-6">
-                      <button
-                        type="button"
-                        className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
+    <div className="min-h-full">
+      <Disclosure as="nav" className="bg-gray-800">
+        {({ open }) => (
+          <>
+            {/* Top Bar */}
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="flex h-16 items-center justify-between">
+                {/* Logo Section */}
+                <div className="flex items-center">
+                  <img className="h-8 w-8" src={logo} alt="Logo" />
+                  <span className="ml-2 font-bold text-white italic text-lg">
+                    Inventory Management
+                  </span>
+                </div>
 
-                      {/* Profile dropdown */}
-                      <Menu as="div" className="relative ml-3">
-                        <div>
-                          <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span className="sr-only">Open user menu</span>
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src={localStorageData.imageUrl}
-                              alt="profile"
-                            />
-                          </Menu.Button>
-                        </div>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {userNavigation.map((item) => (
-                              <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <Link
-                                    to={item.href}
-                                    className={classNames(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
-                                  >
-                                    <span onClick={() => authContext.signout()}>
-                                      {item.name}{" "}
-                                    </span>
-                                  </Link>
-                                )}
-                              </Menu.Item>
-                            ))}
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
+                {/* Desktop Menu */}
+                <div className="hidden md:flex space-x-4">
+                  {navigation.map((item) => {
+                    const isActive = location.pathname === item.href;
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={classNames(
+                          isActive
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "rounded-md px-3 py-2 text-sm font-medium transition"
+                        )}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                {/* Profile + Notifications */}
+                <div className="hidden md:flex items-center space-x-4">
+                  <button
+                    type="button"
+                    className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none"
+                  >
+                    <span className="sr-only">View notifications</span>
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+
+                  {/* Profile Dropdown */}
+                  <Menu as="div" className="relative">
+                    <div>
+                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none">
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src={
+                            localStorageData.imageUrl || "/default-avatar.png"
+                          }
+                          alt="profile"
+                        />
+                      </Menu.Button>
                     </div>
-                  </div>
-                  <div className="-mr-2 flex md:hidden">
-                    {/* Mobile menu button */}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="sr-only">Open main menu</span>
-                      {open ? (
-                        <XMarkIcon
-                          className="block h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <Bars3Icon
-                          className="block h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </Disclosure.Button>
-                  </div>
+
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={handleLogout}
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block w-full text-left px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+
+                {/* Mobile Menu Button */}
+                <div className="flex md:hidden">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
                 </div>
               </div>
+            </div>
 
-              <Disclosure.Panel className="md:hidden">
-                <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                  {navigation.map((item) => (
-                    <Link to={item.href} key={item.name}>
+            {/* Mobile Menu */}
+            <Disclosure.Panel className="md:hidden">
+              <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                {navigation.map((item) => {
+                  const isActive = location.pathname === item.href;
+                  return (
+                    <Link key={item.name} to={item.href}>
                       <Disclosure.Button
-                        key={item.name}
-                        as="a"
-                        // href={item.href}
+                        as="div"
                         className={classNames(
-                          item.current
+                          isActive
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
                           "block rounded-md px-3 py-2 text-base font-medium"
                         )}
-                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </Disclosure.Button>
                     </Link>
-                  ))}
-                </div>
-                <div className="border-t border-gray-700 pt-4 pb-3">
-                  <div className="flex items-center px-5">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={localStorageData.imageUrl}
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">
-                        {localStorageData.firstName +
-                          " " +
-                          localStorageData.lastName}
-                      </div>
-                      <div className="text-sm font-medium leading-none text-gray-400">
-                        {localStorageData.email}
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-                  <div className="mt-3 space-y-1 px-2">
-                    {userNavigation.map((item) => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as="a"
-                        href={item.href}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                      >
-                        <span onClick={() => authContext.signout()}>
-                          {item.name}{" "}
-                        </span>
-                      </Disclosure.Button>
-                    ))}
-                  </div>
-                </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-      </div>
-    </>
-  )
-}
+                  );
+                })}
+              </div>
 
-export default Header 
+              {/* Mobile Profile & Logout */}
+              <div className="border-t border-gray-700 pt-4 pb-3">
+                <div className="flex items-center px-5">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src={localStorageData.imageUrl || "/default-avatar.png"}
+                    alt="profile"
+                  />
+                  <div className="ml-3">
+                    <div className="text-base font-medium text-white">
+                      {localStorageData.firstName
+                        ? `${localStorageData.firstName} ${localStorageData.lastName}`
+                        : "User"}
+                    </div>
+                    <div className="text-sm font-medium text-gray-400">
+                      {localStorageData.email || ""}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-3 space-y-1 px-2">
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    </div>
+  );
+};
+
+export default Header;
+

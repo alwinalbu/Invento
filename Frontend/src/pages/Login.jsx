@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../utlis/AuthContext";
 import logo from "../assets/logo.png";
-import signupImg from '../assets/signup.jpg'
+import signupImg from "../assets/signup.jpg";
 import { serverUrl } from "./Register";
 
 function Login() {
@@ -19,7 +19,7 @@ function Login() {
   };
 
   const loginUser = (e) => {
-    e.preventDefault(); // Prevent form default submission behavior
+    e.preventDefault(); 
 
     if (form.email === "" || form.password === "") {
       alert("To login, enter your email and password.");
@@ -43,10 +43,10 @@ function Login() {
         alert("Successfully logged in.");
         console.log(data, "after login in front end");
 
-        localStorage.setItem("user", JSON.stringify(data.user)); // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(data.user)); 
         authContext.signin(data.user.id, () => {
-          // Call signin from AuthContext
-          navigate("/"); // Redirect to the home page
+         
+          navigate("/");
         });
       })
       .catch((error) => {
@@ -158,3 +158,4 @@ function Login() {
 }
 
 export default Login;
+

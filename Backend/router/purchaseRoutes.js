@@ -1,5 +1,5 @@
 const express = require("express");
-const { addPurchase, getPurchaseData, getTotalPurchaseAmount } = require("../controller/purchaseController");
+const { addPurchase, getPurchaseData, getTotalPurchaseAmount, editPurchase } = require("../controller/purchaseController");
 const router = express.Router();
 
 
@@ -10,6 +10,10 @@ router.post("/add", addPurchase);
 router.get("/get/:userID", getPurchaseData);
 
 router.get("/get/:userID/totalpurchaseamount",getTotalPurchaseAmount);
+
+// ✅ Edit a purchase
+router.put("/edit/:purchaseID", editPurchase);
+
 
 module.exports = router;
 

@@ -12,6 +12,11 @@ const PurchaseSchema = new mongoose.Schema(
             ref: "product",
             required: true,
         },
+        supplierID: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Supplier", 
+            required: true,
+        },
         QuantityPurchased: {
             type: Number,
             required: true,

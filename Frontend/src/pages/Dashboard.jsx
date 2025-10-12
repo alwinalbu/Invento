@@ -16,6 +16,9 @@ function Dashboard() {
 
   const authContext = useContext(AuthContext);
 
+  console.log(authContext.user,"user inside dashboard");
+  
+
   // Fetching total sales amount
   const fetchTotalSaleAmount = () => {
     fetch(`${serverUrl}/sales/get/${authContext.user}/totalsaleamount`)
@@ -264,3 +267,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+

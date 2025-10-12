@@ -7,6 +7,7 @@ const productRoutes = require('./router/productRoutes');
 const purchaseRoutes = require('./router/purchaseRoutes');
 const storeRoutes = require('./router/storeRoutes');
 const salesRoutes = require('./router/salesRoutes');
+const supplierRoutes = require("./router/supplierRoutes");
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const errorHandler = require('./middleWare/errorMiddleware');
@@ -38,11 +39,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 //Route
-app.use('/', userRoutes);
-app.use('/product',productRoutes)
-app.use('/purchase',purchaseRoutes)
-app.use('/store',storeRoutes)
-app.use('/sales',salesRoutes)
+// ✅ Mount supplier first
+app.use("/supplier", supplierRoutes);
+app.use("/product", productRoutes);
+app.use("/purchase", purchaseRoutes);
+app.use("/store", storeRoutes);
+app.use("/sales", salesRoutes);
+app.use("/", userRoutes);
 
 //Error Middleware
 

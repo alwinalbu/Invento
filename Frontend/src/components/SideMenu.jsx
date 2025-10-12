@@ -1,88 +1,96 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+} from "@heroicons/react/24/solid";
 import dashboardIcon from "../assets/dashboard-icon.png";
 import inventoryIcon from "../assets/inventory-icon.png";
 import supplierIcon from "../assets/supplier-icon.png";
 import orderIcon from "../assets/order-icon.png";
 
 const SideMenu = () => {
-    const localStorageData = JSON.parse(localStorage.getItem('user'));
+  const localStorageData = JSON.parse(localStorage.getItem("user"));
+  const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-    console.log(localStorageData,"inside the sideMenuu");
-    
+  const isActive = (path) => location.pathname === path;
+
+  const navItems = [
+    { name: "Dashboard", path: "/", icon: dashboardIcon },
+    { name: "Inventory", path: "/inventory", icon: inventoryIcon },
+    { name: "Purchase Details", path: "/purchase-details", icon: supplierIcon },
+    { name: "Sales", path: "/sales", icon: supplierIcon },
+    { name: "Manage Store", path: "/manage-store", icon: orderIcon },
+    { name: "Suppliers", path: "/suppliers", icon: supplierIcon },
+  ];
 
   return (
-    <div className="h-full flex-col justify-between  bg-white hidden lg:flex ">
-      <div className="px-4 py-6">
-        <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1">
-          <Link
-            to="/"
-            className="flex items-center gap-2 rounded-lg hover:bg-gray-100 px-4 py-2 text-gray-700"
+    <div
+      className={`h-screen flex flex-col justify-between bg-white border-r shadow-sm transition-all duration-300 ${
+        isCollapsed ? "w-20" : "w-64"
+      }`}
+    >
+      {/* ========== Top Section ========== */}
+      <div className="flex flex-col">
+        {/* Toggle Button */}
+        <div className="flex justify-end p-3">
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="text-gray-600 hover:text-blue-600"
           >
-            <img alt="dashboard-icon" src={dashboardIcon} />
-            <span className="text-sm font-medium"> Dashboard </span>
-          </Link>
+            {isCollapsed ? (
+              <ChevronDoubleRightIcon className="h-5 w-5" />
+            ) : (
+              <ChevronDoubleLeftIcon className="h-5 w-5" />
+            )}
+          </button>
+        </div>
 
-          <details className="group [&_summary::-webkit-details-marker]:hidden">
-            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-              <Link to="/inventory">
-                <div className="flex items-center gap-2">
-                  <img alt="inventory-icon" src={inventoryIcon} />
-                  <span className="text-sm font-medium"> Inventory </span>
-                </div>
-              </Link>
-            </summary>
-          </details>
-
-          <Link
-            to="/purchase-details"
-            className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            <img alt="purchase-icon" src={supplierIcon} />
-            <span className="text-sm font-medium"> Purchase Details</span>
-          </Link>
-          <Link
-            to="/sales"
-            className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-          >
-            <img alt="sale-icon" src={supplierIcon} />
-            <span className="text-sm font-medium"> Sales</span>
-          </Link>
-
-          <details className="group [&_summary::-webkit-details-marker]:hidden">
-            <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-              <Link to="/manage-store">
-                <div className="flex items-center gap-2">
-                  <img alt="store-icon" src={orderIcon} />
-                  <span className="text-sm font-medium"> Manage Store </span>
-                </div>
-              </Link>
-            </summary>
-          </details>
+        {/* Menu Items */}
+        <nav aria-label="Main Nav" className="flex flex-col space-y-1 mt-3">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`group flex items-center gap-3 rounded-lg mx-2 p-2 transition-all duration-200 ${
+                isActive(item.path)
+                  ? "bg-blue-600 text-white"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              title={isCollapsed ? item.name : ""}
+            >
+              <img src={item.icon} alt={item.name} className="h-5 w-5" />
+              {!isCollapsed && (
+                <span className="text-sm font-medium">{item.name}</span>
+              )}
+            </Link>
+          ))}
         </nav>
       </div>
 
-      <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-        <div className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
-          <img
-            alt="Profile"
-            src={localStorageData.imageUrl}
-            className="h-10 w-10 rounded-full object-cover"
-          />
-
+      {/* ========== Bottom User Section ========== */}
+      <div className="border-t border-gray-200 p-3 flex items-center gap-3 hover:bg-gray-50 transition-all">
+        <img
+          src={localStorageData?.imageUrl}
+          alt="User"
+          className="h-10 w-10 rounded-full object-cover border border-gray-300"
+        />
+        {!isCollapsed && (
           <div>
-            <p className="text-xs">
-              <strong className="block font-medium">
-                {localStorageData.firstName + " " + localStorageData.lastName}
+            <p className="text-xs text-gray-700">
+              <strong className="block font-medium text-gray-900">
+                {localStorageData?.firstName + " " + localStorageData?.lastName}
               </strong>
-
-              <span> {localStorageData.email} </span>
+              <span className="text-gray-500 text-[11px]">
+                {localStorageData?.email}
+              </span>
             </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
-}
+};
 
-export default SideMenu
+export default SideMenu;
