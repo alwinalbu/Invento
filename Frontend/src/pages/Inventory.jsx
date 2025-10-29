@@ -8,11 +8,11 @@ import { serverUrl } from "./Register";
 const Inventory = () => {
   const [showProductModal, setShowProductModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [updateProduct, setUpdateProduct] = useState(null); // Changed to null
+  const [updateProduct, setUpdateProduct] = useState(null); 
   const [products, setAllProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [refresh, setRefresh] = useState(false); // For re-fetching data
-  const [error, setError] = useState(null); // For error handling
+  const [refresh, setRefresh] = useState(false); 
+  const [error, setError] = useState(null); 
 
   const authContext = useContext(AuthContext);
 
@@ -171,9 +171,6 @@ const Inventory = () => {
                     Stock
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
-                    Description
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
                     Availability
                   </th>
                   <th className="whitespace-nowrap px-4 py-2 text-left font-medium text-gray-900">
@@ -193,9 +190,6 @@ const Inventory = () => {
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {element.stock}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                      {element.description}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                       {element.stock > 0 ? "In Stock" : "Not in Stock"}
@@ -235,4 +229,5 @@ const Inventory = () => {
 };
 
 export default Inventory;
+
 

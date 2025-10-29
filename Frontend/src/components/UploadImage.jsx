@@ -7,6 +7,14 @@ function UploadImage({ uploadImage }) {
   // Handle file input change event
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
+    if(!file) return ;
+
+    if(!file.type.startsWith("image/")){
+      alert("❌ Only image files (JPG, JPEG, PNG) are allowed!");
+      return;
+    }
+
+    
     setFileName(file); 
     uploadImage(file); 
 
