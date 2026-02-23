@@ -4,19 +4,51 @@ const User = require('../models/User');
 
 const registerUser = async (req, res) => {
     try {
+        let { firstName, lastName, email, password, phoneNumber, imageUrl } = req.body;
 
-        const { firstName, lastName, email, password, phoneNumber, imageUrl } = req.body;
+        // Trim values
+        firstName = firstName?.trim();
+        lastName = lastName?.trim();
+        email = email?.trim().toLowerCase();
+        password = password?.trim();
+        phoneNumber = phoneNumber?.trim();
 
-        console.log(firstName, lastName, email, password, phoneNumber, imageUrl,"imageurl");
-        
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: 'User with this email already exists' });
+        // Basic required validation
+        if (!firstName || !lastName || !email || !password || !phoneNumber) {
+            return res.status(400).json({ message: "All fields are required" });
         }
 
+        // Email format validation
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "Invalid email format" });
+        }
 
+        // Password strength validation (minimum 6 characters)
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters long",
+            });
+        }
+
+        // Indian phone validation (change if needed)
+        const phoneRegex = /^[6-9]\d{9}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+            return res.status(400).json({
+                message: "Enter valid 10-digit Indian mobile number",
+            });
+        }
+
+        // Check if email already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({
+                message: "User with this email already exists",
+            });
+        }
+
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-
 
         const newUser = new User({
             firstName,
@@ -27,16 +59,18 @@ const registerUser = async (req, res) => {
             imageUrl,
         });
 
-
         await newUser.save();
 
+        res.status(201).json({
+            message: "User registered successfully",
+        });
 
-        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
+        console.error("Registration error:", error);
 
-        console.error('Registration error:', error);
-
-        res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(500).json({
+            message: "Server error",
+        });
     }
 };
 
